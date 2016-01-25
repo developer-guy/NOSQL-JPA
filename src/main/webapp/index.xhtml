@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="articleForm">
+            <p:growl id="growl"/>
+            <h:panelGrid id ="registrationPanelGrid" columns="2" cellpadding="2" cellspacing="2">
+                <p:panel header="Article Form">
+                    <h:outputLabel value="Category"/>
+                    <p:inputText value="#{noSQLControllerBean.categories}"/>
+                    <h:outputLabel value="Title"/>
+                    <p:inputText value="#{noSQLControllerBean.article.title}" required="#{param['saveArticle']=='true'}" requiredMessage="This field is required"/>
+                    <h:outputLabel value="Content"/>
+                    <p:inputText value="#{noSQLControllerBean.article.content}" required="#{param['saveArticle']=='true'}" requiredMessage="This field is required"/>
+                    <h:outputLabel value="Author"/>
+                    <p:inputText value="#{noSQLControllerBean.article.author}" required="#{param['saveArticle']=='true'}" requiredMessage="This field is required"/>
+                    <h:outputLabel value="Tags"/>
+                    <p:inputText value="#{noSQLControllerBean.tags}"/>
+                </p:panel>
+            </h:panelGrid>
+
+            <p:commandButton id="saveArticle" value="Save" update="articleForm table"
+                             action="#{noSQLControllerBean.saveArticle()}">
+                <f:param name="saveArticle" value="true"/>
+            </p:commandButton>
+
+            <p:dataTable id="table" value="#{noSQLControllerBean.articleList}" var="article">
+                <p:column headerText="Title">
+                    <h:outputText value="#{article.title}"/>
+                </p:column>
+                <p:column headerText="Content">
+                    <h:outputText value="#{article.content}"/>
+                </p:column>
+                <p:column headerText="Author">
+                    <h:outputText value="#{article.author}"/>
+                </p:column>
+                <p:column headerText="Date">
+                    <h:outputText value="#{article.date}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+
